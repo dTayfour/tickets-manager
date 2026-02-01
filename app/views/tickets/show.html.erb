@@ -1,0 +1,58 @@
+<div style="max-width: 800px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <p style="color: green"><%= notice %></p>
+
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 30px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+      <h1 style="margin: 0; color: #333;"><%= @ticket.title %></h1>
+      <div style="display: flex; gap: 10px;">
+        <span style="padding: 6px 16px; background: #e7f3ff; color: #004085; border-radius: 20px; font-size: 14px; font-weight: 500;">
+          <%= @ticket.status.upcase %>
+        </span>
+        <span style="padding: 6px 16px; background: 
+          <%= case @ticket.priority
+              when 'urgent' then '#fff3cd'
+              when 'high' then '#f8d7da'
+              when 'medium' then '#d1ecf1'
+              else '#d4edda'
+              end %>
+          ; color: #333; border-radius: 20px; font-size: 14px; font-weight: 500;">
+          <%= @ticket.priority.upcase %>
+        </span>
+      </div>
+    </div>
+
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px; color: #666;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+          <strong>Created by:</strong><br>
+          <%= @ticket.created_by || "Unknown" %>
+        </div>
+        <div>
+          <strong>Created:</strong><br>
+          <%= @ticket.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+        </div>
+        <div>
+          <strong>Last Updated:</strong><br>
+          <%= @ticket.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin: 30px 0;">
+      <h2 style="color: #333; margin-top: 0;">Description</h2>
+      <% if @ticket.description.present? %>
+        <p style="color: #555; line-height: 1.6; white-space: pre-wrap;">
+          <%= @ticket.description %>
+        </p>
+      <% else %>
+        <p style="color: #999; font-style: italic;">No description provided</p>
+      <% end %>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+      <%= link_to "Edit", edit_ticket_path(@ticket), style: "display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: 500; cursor: pointer;" %>
+      <%= button_to "Delete", @ticket, method: :delete, data: { confirm: "Are you sure?" }, style: "display: inline-block; padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 4px; font-weight: 500; cursor: pointer;" %>
+      <%= link_to "Back to Tickets", tickets_path, style: "display: inline-block; padding: 10px 20px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-weight: 500; cursor: pointer;" %>
+    </div>
+  </div>
+</div>
